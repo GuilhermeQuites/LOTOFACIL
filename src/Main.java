@@ -6,6 +6,8 @@ import java.util.Scanner;
 public class Main {
     public static void main(String[] args)
     {
+        double saldo = 0;
+        String jogo = "s";
         Random aleatorio = new Random();
         Scanner scanner = new Scanner(System.in);
 
@@ -16,7 +18,7 @@ public class Main {
      do {
 
          System.out.println("* * * * * * * * * * * * * * * * * * *");
-         System.out.println("*          MENU LOTOFÁCIL           *");
+         System.out.println("*          MENU LOTOFÁCIL           *" + "        R$" + saldo);
          System.out.println("*          --------------           *");
          System.out.println("*    1)  Apostar de 0 a 100         *");
          System.out.println("*    2)  Apostar de A à Z           *");
@@ -34,7 +36,6 @@ public class Main {
         switch (opcao){
 
             case 1:
-                String jogo = "s";
                 int numero;
 
 
@@ -43,7 +44,7 @@ public class Main {
 
 
                     int numAleatorio = aleatorio.nextInt(100) + 1 ;
-                    System.out.println("O numero eh: " + numAleatorio);
+                    //System.out.println("O numero eh: " + numAleatorio);
 
 
                     System.out.println("Digite o numero:");
@@ -60,6 +61,7 @@ public class Main {
                     } else if (numero == numAleatorio) {
 
                         System.out.println("Parabens você ganhou R$ 1.000,00");
+                        saldo += 1000;
                         System.out.println("O numero aleatorio é " + numAleatorio);
                         System.out.println("Continuar jogando? (S/N)");
                         scanner.nextLine();
@@ -75,47 +77,75 @@ public class Main {
                 System.out.println("*------* FIM JOGO 1 *------*");
                 break;
             case 2:
-                String jogo2 = "s";
+
                 do {
                     try {
                         System.out.println("Aposta de A à Z: ");
+                        int letra = aleatorio.nextInt(90 - 65 + 1) + 65;
+                        char letraSorteada = (char) Character.toUpperCase(letra);
+                        //System.out.println(letraSorteada);
+
+
                         int entradaLetra = System.in.read();
                         char apostaLetra = (char) Character.toUpperCase(entradaLetra);
 
-                        int letra = aleatorio.nextInt(90 - 65 + 1) + 65;
-                        char letraSorteada = (char) Character.toUpperCase(letra);
+
 
                         if (Character.isLetter(apostaLetra) && apostaLetra >= 'A' && apostaLetra <= 'Z') {
 
-                            System.out.println("A letra sorteada é: " + letraSorteada);
-
                             if (apostaLetra == letraSorteada) {
                                 System.out.println("Você ganhou R$ 500,00 reais.");
+                                saldo += 500;
                                 System.out.println("Continuar jogando? (S/N)");
-                                scanner.nextLine();
-                                jogo2 = scanner.nextLine();
+                                jogo = scanner.next();
                             } else {
 
                                 System.out.println("Que pena! A letra sorteada foi: " + letraSorteada);
                                 System.out.println("Continuar jogando? (S/N)");
-                                scanner.nextLine();
-                                jogo2 = scanner.nextLine();
+                                jogo = scanner.next();
                             }
                         } else {
+                            System.out.println("Aposta inválida! (Apenas apostas de A a Z)");
                             System.out.println("Deseja continuar nesse Jogo? (S/N)");
-                            scanner.nextLine();
-                            jogo2 = scanner.nextLine();
+                            jogo = scanner.next();
                         }
 
 
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
-                }while (!jogo2.equalsIgnoreCase("n"));
-
+                }while (!jogo.equalsIgnoreCase("n"));
+                System.out.println("*------* FIM JOGO 2 *------*");
                 break;
             case 3:
+
+                int numeroEntrada;
+
                 System.out.println("Apostar em par ou ímpar");
+
+
+
+
+                do {
+                    System.out.println("Digite o numero:");
+                    numeroEntrada = scanner.nextInt();
+
+                    if(numeroEntrada % 2 == 0){
+
+                        System.out.println("Você ganhou R$ 100,00");
+                        saldo += 100;
+                        System.out.println("Continuar jogando? (S/N)");
+                        scanner.nextLine();
+                        jogo = scanner.nextLine();
+                }else{
+
+                        System.out.println("Que pena! O número digitado é ímpar e a premiação foi para números pares.");
+                        System.out.println("Continuar jogando? (S/N)");
+                        scanner.nextLine();
+                        jogo = scanner.nextLine();
+                    }
+                } while (!jogo.equalsIgnoreCase("n"));
+                System.out.println("*------* FIM JOGO 3 *------*");
                 break;
             case 0:
                 System.out.println("SAIR");
@@ -127,15 +157,6 @@ public class Main {
 
 
      }while (opcao != 0);
-
-
-
-
-
-
-
-
-
 
 
     }
